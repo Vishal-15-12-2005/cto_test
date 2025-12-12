@@ -27,6 +27,13 @@ class EventBus(EventDispatcher):
         self.register_event_type('on_obfuscation_monitor_update')
         self.register_event_type('on_obfuscation_warning')
 
+        # Messaging
+        self.register_event_type('on_conversation_updated')
+        self.register_event_type('on_message_batch')
+        self.register_event_type('on_message_deleted')
+        self.register_event_type('on_typing_state')
+        self.register_event_type('on_receipt_update')
+
         self._initialized = True
 
     def on_tor_status_update(self, status):
@@ -62,6 +69,22 @@ class EventBus(EventDispatcher):
     def on_obfuscation_warning(self, warning_type, message):
         pass
 
+    # Messaging events
+    def on_conversation_updated(self, conversation_id, conversation):
+        pass
+
+    def on_message_batch(self, conversation_id, messages):
+        pass
+
+    def on_message_deleted(self, conversation_id, message_id):
+        pass
+
+    def on_typing_state(self, conversation_id, peer_id, is_typing: bool):
+        pass
+
+    def on_receipt_update(self, conversation_id, message_id, status):
+        pass
+
     def emit_tor_status(self, status):
         self.dispatch('on_tor_status_update', status)
 
@@ -94,6 +117,22 @@ class EventBus(EventDispatcher):
 
     def emit_obfuscation_warning(self, warning_type, message):
         self.dispatch('on_obfuscation_warning', warning_type, message)
+
+    # Messaging emit helpers
+    def emit_conversation_updated(self, conversation_id, conversation):
+        self.dispatch('on_conversation_updated', conversation_id, conversation)
+
+    def emit_message_batch(self, conversation_id, messages):
+        self.dispatch('on_message_batch', conversation_id, messages)
+
+    def emit_message_deleted(self, conversation_id, message_id):
+        self.dispatch('on_message_deleted', conversation_id, message_id)
+
+    def emit_typing_state(self, conversation_id, peer_id, is_typing: bool):
+        self.dispatch('on_typing_state', conversation_id, peer_id, bool(is_typing))
+
+    def emit_receipt_update(self, conversation_id, message_id, status):
+        self.dispatch('on_receipt_update', conversation_id, message_id, status)
 
 
 event_bus = EventBus()
