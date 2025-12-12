@@ -1,4 +1,5 @@
 from kivy.app import App
+from kivy.clock import Clock
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import Screen
 
@@ -12,6 +13,8 @@ from src.services.tor_manager import tor_manager
 from src.services.maximum_ai_manager import maximum_ai_manager
 from src.services.smart_agent import smart_agent
 from src.services.obfuscation_monitor_service import obfuscation_monitor_service
+from src.services.app_state_store import app_state_store
+from src.widgets.app_onboarding_wizard import AppOnboardingWizard
 from src.services.contact_service import contact_service
 from src.services.messaging_service import messaging_service
 from src.widgets.shell import NavigationItem, ResponsiveShell
@@ -92,6 +95,13 @@ class MainApp(App):
         smart_agent.activate()
         obfuscation_monitor_service.start_service()
         messaging_service.start_service()
+
+        if not app_state_store.is_onboarding_complete():
+            def _open_onboarding(dt):
+                self._onboarding_wizard = AppOnboardingWizard(tor_manager)
+                self._onboarding_wizard.open()
+
+            Clock.schedule_once(_open_onboarding, 0)
 
     def on_stop(self):
         tor_manager.stop_service()

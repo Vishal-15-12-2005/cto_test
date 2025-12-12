@@ -55,6 +55,10 @@ class EventBus(EventDispatcher):
         self.register_event_type('on_typing_state')
         self.register_event_type('on_receipt_update')
 
+        self.register_event_type('on_app_onboarding_progress')
+        self.register_event_type('on_app_onboarding_complete')
+        self.register_event_type('on_identity_ready')
+
         self._initialized = True
 
     def on_tor_status_update(self, status):
@@ -90,6 +94,13 @@ class EventBus(EventDispatcher):
     def on_obfuscation_warning(self, warning_type, message):
         pass
 
+    def on_app_onboarding_progress(self, state):
+        pass
+
+    def on_app_onboarding_complete(self, payload):
+        pass
+
+    def on_identity_ready(self, payload):
     # Messaging events
     def on_conversation_updated(self, conversation_id, conversation):
         pass
@@ -198,6 +209,14 @@ class EventBus(EventDispatcher):
     def emit_obfuscation_warning(self, warning_type, message):
         self.dispatch('on_obfuscation_warning', warning_type, message)
 
+    def emit_app_onboarding_progress(self, state):
+        self.dispatch('on_app_onboarding_progress', state)
+
+    def emit_app_onboarding_complete(self, payload):
+        self.dispatch('on_app_onboarding_complete', payload)
+
+    def emit_identity_ready(self, payload):
+        self.dispatch('on_identity_ready', payload)
     # Messaging emit helpers
     def emit_conversation_updated(self, conversation_id, conversation):
         self.dispatch('on_conversation_updated', conversation_id, conversation)
