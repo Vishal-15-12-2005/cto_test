@@ -1,0 +1,54 @@
+feat: implement comprehensive traffic obfuscation settings & monitoring screen
+
+Implemented a full-featured Traffic Obfuscation Settings & Monitoring screen with:
+
+Settings Features:
+- Mode control (Standard/Maximum with auto-switch rules)
+- Schedule editor (24/7, specific hours, business/night presets)
+- Battery saver with configurable threshold
+- Network quality awareness
+- Data cap warnings with usage tracking
+- Historical statistics (session/today/week)
+
+Monitoring Features:
+- Live packets/sec graph with 30-point rolling window
+- Resource usage bars (CPU, memory, battery) with color coding
+- Bandwidth ratio visualization (inbound/outbound)
+- Model performance metrics (accuracy, latency)
+- Tor connection pool status (active circuits)
+- Error log with timestamps
+
+Technical Implementation:
+- ObfuscationConfigService: Persistent settings storage via JsonStore
+- ObfuscationMonitorService: Aggregates metrics from TorManager & SmartAgent
+- Event bus integration: 3 new event types for real-time updates
+- 6 custom widgets: ResourceBar, PacketsGraph, BandwidthVisualization, etc.
+- ObfuscationSettingsScreen: Responsive 2-column layout with 10 cards
+
+Performance Optimizations:
+- Throttled updates (2.5s intervals) for battery efficiency
+- Canvas caching for graph rendering
+- Rolling data windows (limited history)
+- Batched event emissions
+
+All acceptance criteria met:
+✅ Settings persist via config service
+✅ Monitoring charts update smoothly without FPS degradation
+✅ Warnings when thresholds hit
+✅ Historical stats populate from mock history store
+✅ Graphs optimized for low-power devices
+
+Files added:
+- src/services/obfuscation_config_service.py
+- src/services/obfuscation_monitor_service.py
+- src/widgets/obfuscation_widgets.py
+- src/screens/obfuscation_settings_screen.py
+- test_obfuscation.py (comprehensive test suite)
+- OBFUSCATION_SETTINGS_README.md (detailed documentation)
+- IMPLEMENTATION_COMPLETE.md (implementation summary)
+
+Files modified:
+- src/main.py (integrated new screen and service)
+- src/utils/event_bus.py (added obfuscation event types)
+
+Tested: All unit tests pass, integration verified, imports successful.
