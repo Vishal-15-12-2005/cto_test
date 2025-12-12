@@ -5,3 +5,10 @@ __pycache__/
 .idea/
 .vscode/
 *.swp
+.contact_manager/
+.tor_dashboard/
+*.pyc
+.kivy/
+*.egg-info/
+dist/
+build/
