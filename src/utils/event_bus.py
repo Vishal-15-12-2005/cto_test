@@ -26,6 +26,7 @@ class EventBus(EventDispatcher):
         self.register_event_type('on_obfuscation_settings_update')
         self.register_event_type('on_obfuscation_monitor_update')
         self.register_event_type('on_obfuscation_warning')
+        self.register_event_type('on_preferences_updated')
 
         self._initialized = True
 
@@ -62,6 +63,9 @@ class EventBus(EventDispatcher):
     def on_obfuscation_warning(self, warning_type, message):
         pass
 
+    def on_preferences_updated(self, preferences):
+        pass
+
     def emit_tor_status(self, status):
         self.dispatch('on_tor_status_update', status)
 
@@ -94,6 +98,9 @@ class EventBus(EventDispatcher):
 
     def emit_obfuscation_warning(self, warning_type, message):
         self.dispatch('on_obfuscation_warning', warning_type, message)
+
+    def emit_preferences_updated(self, preferences):
+        self.dispatch('on_preferences_updated', preferences)
 
 
 event_bus = EventBus()
