@@ -1,4 +1,5 @@
 from kivy.app import App
+from kivy.clock import Clock
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import Screen
 
@@ -10,6 +11,8 @@ from src.services.tor_manager import tor_manager
 from src.services.maximum_ai_manager import maximum_ai_manager
 from src.services.smart_agent import smart_agent
 from src.services.obfuscation_monitor_service import obfuscation_monitor_service
+from src.services.app_state_store import app_state_store
+from src.widgets.app_onboarding_wizard import AppOnboardingWizard
 from src.widgets.shell import NavigationItem, ResponsiveShell
 
 class PlaceholderScreen(Screen):
@@ -71,6 +74,13 @@ class MainApp(App):
         maximum_ai_manager.start_service()
         smart_agent.activate()
         obfuscation_monitor_service.start_service()
+
+        if not app_state_store.is_onboarding_complete():
+            def _open_onboarding(dt):
+                self._onboarding_wizard = AppOnboardingWizard(tor_manager)
+                self._onboarding_wizard.open()
+
+            Clock.schedule_once(_open_onboarding, 0)
 
     def on_stop(self):
         tor_manager.stop_service()
