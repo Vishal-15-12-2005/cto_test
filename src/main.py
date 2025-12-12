@@ -7,12 +7,14 @@ from src.screens.maximum_ai_control_panel import MaximumAIControlPanel
 from src.screens.status_dashboard import StatusDashboard
 from src.screens.traffic_dashboard import TrafficDashboard
 from src.screens.obfuscation_settings_screen import ObfuscationSettingsScreen
+from src.screens.settings_screen import SettingsScreen
 from src.screens.contacts_screen import ContactsScreen
 from src.screens.messaging_screen import MessagingScreen
 from src.services.tor_manager import tor_manager
 from src.services.maximum_ai_manager import maximum_ai_manager
 from src.services.smart_agent import smart_agent
 from src.services.obfuscation_monitor_service import obfuscation_monitor_service
+from src.services.preferences_store import preferences_store
 from src.services.app_state_store import app_state_store
 from src.widgets.app_onboarding_wizard import AppOnboardingWizard
 from src.services.contact_service import contact_service
@@ -43,6 +45,9 @@ class MainApp(App):
         
         # Messaging Screen
         messaging = MessagingScreen()
+
+        # Settings Screen
+        settings_screen = SettingsScreen()
 
         # Add Navigation Items
         self.shell.add_nav_item(NavigationItem(
@@ -84,7 +89,7 @@ class MainApp(App):
         self.shell.add_nav_item(NavigationItem(
             name='settings',
             text='Settings',
-            screen=PlaceholderScreen(name='settings', text="Settings Screen"),
+            screen=settings_screen,
         ))
         
         return self.shell
