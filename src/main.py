@@ -4,6 +4,8 @@ from kivy.uix.screenmanager import Screen
 
 from src.screens.maximum_ai_control_panel import MaximumAIControlPanel
 from src.screens.status_dashboard import StatusDashboard
+from src.screens.traffic_dashboard import TrafficDashboard
+from src.services.tor_manager import tor_manager
 from src.services.maximum_ai_manager import maximum_ai_manager
 from src.services.smart_agent import smart_agent
 from src.services.tor_manager import tor_manager
@@ -21,6 +23,10 @@ class MainApp(App):
         
         # Screens
         dashboard = StatusDashboard()
+        
+        # Traffic Dashboard Screen
+        traffic_dashboard = TrafficDashboard()
+        
         max_ai_panel = MaximumAIControlPanel()
 
         # Add Navigation Items
@@ -37,6 +43,15 @@ class MainApp(App):
         ))
 
         self.shell.add_nav_item(NavigationItem(
+            name='traffic', 
+            text='Traffic', 
+            screen=traffic_dashboard
+        ))
+        
+        self.shell.add_nav_item(NavigationItem(
+            name='settings', 
+            text='Settings', 
+            screen=PlaceholderScreen(name='settings', text="Settings Screen")
             name='settings',
             text='Settings',
             screen=PlaceholderScreen(name='settings', text="Settings Screen"),
