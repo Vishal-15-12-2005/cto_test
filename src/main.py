@@ -6,10 +6,12 @@ from src.screens.maximum_ai_control_panel import MaximumAIControlPanel
 from src.screens.status_dashboard import StatusDashboard
 from src.screens.traffic_dashboard import TrafficDashboard
 from src.screens.obfuscation_settings_screen import ObfuscationSettingsScreen
+from src.screens.messaging_screen import MessagingScreen
 from src.services.tor_manager import tor_manager
 from src.services.maximum_ai_manager import maximum_ai_manager
 from src.services.smart_agent import smart_agent
 from src.services.obfuscation_monitor_service import obfuscation_monitor_service
+from src.services.messaging_service import messaging_service
 from src.widgets.shell import NavigationItem, ResponsiveShell
 
 class PlaceholderScreen(Screen):
@@ -32,6 +34,9 @@ class MainApp(App):
         
         # Obfuscation Settings & Monitoring Screen
         obfuscation_settings = ObfuscationSettingsScreen()
+        
+        # Messaging Screen
+        messaging = MessagingScreen()
 
         # Add Navigation Items
         self.shell.add_nav_item(NavigationItem(
@@ -59,6 +64,12 @@ class MainApp(App):
         ))
         
         self.shell.add_nav_item(NavigationItem(
+            name='messages',
+            text='Messages',
+            screen=messaging
+        ))
+        
+        self.shell.add_nav_item(NavigationItem(
             name='settings',
             text='Settings',
             screen=PlaceholderScreen(name='settings', text="Settings Screen"),
@@ -71,12 +82,14 @@ class MainApp(App):
         maximum_ai_manager.start_service()
         smart_agent.activate()
         obfuscation_monitor_service.start_service()
+        messaging_service.start_service()
 
     def on_stop(self):
         tor_manager.stop_service()
         maximum_ai_manager.stop_service()
         smart_agent.deactivate()
         obfuscation_monitor_service.stop_service()
+        messaging_service.stop_service()
 
 if __name__ == '__main__':
     MainApp().run()
