@@ -26,6 +26,12 @@ class EventBus(EventDispatcher):
         self.register_event_type('on_obfuscation_settings_update')
         self.register_event_type('on_obfuscation_monitor_update')
         self.register_event_type('on_obfuscation_warning')
+        self.register_event_type('on_message_received')
+        self.register_event_type('on_typing_indicator')
+        self.register_event_type('on_read_receipt')
+        self.register_event_type('on_message_reacted')
+        self.register_event_type('on_message_pinned')
+        self.register_event_type('on_search_results')
 
         self._initialized = True
 
@@ -60,6 +66,24 @@ class EventBus(EventDispatcher):
         pass
 
     def on_obfuscation_warning(self, warning_type, message):
+        pass
+
+    def on_message_received(self, message):
+        pass
+
+    def on_typing_indicator(self, data):
+        pass
+
+    def on_read_receipt(self, data):
+        pass
+
+    def on_message_reacted(self, data):
+        pass
+
+    def on_message_pinned(self, data):
+        pass
+
+    def on_search_results(self, results):
         pass
 
     def emit_tor_status(self, status):
