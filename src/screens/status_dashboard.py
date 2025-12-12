@@ -8,11 +8,13 @@ from kivy.uix.label import Label
 from kivy.uix.screenmanager import Screen
 from kivy.uix.scrollview import ScrollView
 
+from src.services.maximum_ai_manager import maximum_ai_manager
 from src.services.tor_manager import tor_manager
 from src.services.tor_settings_store import tor_settings_store
 from src.theming.theme_manager import theme_manager
 from src.utils.event_bus import event_bus
 from src.widgets.cards import Card
+from src.widgets.max_ai_widgets import MaxAIModeCard
 from src.widgets.tor_dashboard_widgets import (
     AutoReconnectCard,
     CircuitInfoCard,
@@ -68,6 +70,7 @@ class StatusDashboard(Screen):
         self.latency_card = LatencyCard()
         self.version_card = TorVersionCard()
         self.traffic_card = Card(title='Traffic Status', content='Waiting for analysis…')
+        self.max_ai_card = MaxAIModeCard()
 
         for w in [
             self.daemon_card,
@@ -77,6 +80,7 @@ class StatusDashboard(Screen):
             self.latency_card,
             self.version_card,
             self.traffic_card,
+            self.max_ai_card,
         ]:
             self.cards.add_widget(w)
 
@@ -85,11 +89,13 @@ class StatusDashboard(Screen):
 
         event_bus.bind(on_tor_state_update=self._on_tor_state)
         event_bus.bind(on_traffic_status_update=self._on_traffic_status)
+        event_bus.bind(on_max_ai_state_update=self._on_max_ai_state)
 
         Clock.schedule_once(lambda dt: self._bootstrap_initial_state(), 0)
 
     def _bootstrap_initial_state(self):
         self._on_tor_state(self, tor_manager.get_state())
+        self._on_max_ai_state(self, maximum_ai_manager.get_state())
         settings = tor_settings_store.get_settings()
         if not settings.get('has_onboarded', False):
             Clock.schedule_once(lambda dt: self.open_onboarding(), 0.15)
@@ -114,3 +120,7 @@ class StatusDashboard(Screen):
     @mainthread
     def _on_traffic_status(self, instance, status):
         self.traffic_card.update_content(status)
+
+    @mainthread
+    def _on_max_ai_state(self, instance, state):
+        self.max_ai_card.apply_state(state)
