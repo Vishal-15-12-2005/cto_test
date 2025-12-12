@@ -19,6 +19,7 @@ class EventBus(EventDispatcher):
         self.register_event_type('on_tor_state_update')
         self.register_event_type('on_tor_settings_update')
         self.register_event_type('on_traffic_status_update')
+        self.register_event_type('on_traffic_obfuscation_update')
         self.register_event_type('on_theme_changed')
 
         self._initialized = True
@@ -35,6 +36,9 @@ class EventBus(EventDispatcher):
     def on_traffic_status_update(self, status):
         pass
 
+    def on_traffic_obfuscation_update(self, state):
+        pass
+
     def on_theme_changed(self, theme_name):
         pass
 
@@ -49,6 +53,9 @@ class EventBus(EventDispatcher):
 
     def emit_traffic_status(self, status):
         self.dispatch('on_traffic_status_update', status)
+
+    def emit_traffic_obfuscation_update(self, state):
+        self.dispatch('on_traffic_obfuscation_update', state)
 
     def emit_theme_changed(self, theme_name):
         self.dispatch('on_theme_changed', theme_name)

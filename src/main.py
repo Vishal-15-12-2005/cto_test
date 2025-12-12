@@ -1,6 +1,7 @@
 from kivy.app import App
 from src.widgets.shell import ResponsiveShell, NavigationItem
 from src.screens.status_dashboard import StatusDashboard
+from src.screens.traffic_dashboard import TrafficDashboard
 from src.services.tor_manager import tor_manager
 from src.services.smart_agent import smart_agent
 from kivy.uix.screenmanager import Screen
@@ -19,11 +20,20 @@ class MainApp(App):
         # Dashboard Screen
         dashboard = StatusDashboard()
         
+        # Traffic Dashboard Screen
+        traffic_dashboard = TrafficDashboard()
+        
         # Add Navigation Items
         self.shell.add_nav_item(NavigationItem(
             name='dashboard', 
             text='Dashboard', 
             screen=dashboard
+        ))
+        
+        self.shell.add_nav_item(NavigationItem(
+            name='traffic', 
+            text='Traffic', 
+            screen=traffic_dashboard
         ))
         
         self.shell.add_nav_item(NavigationItem(
