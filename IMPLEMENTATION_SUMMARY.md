@@ -295,3 +295,47 @@ To use the dashboard:
 5. Adjust settings and watch battery impact change
 6. Configure scheduling via modal
 7. Monitor traffic graph for visual feedback
+
+---
+
+# Implementation Summary: App Onboarding Wizard Flow
+
+## Entry Point
+
+- `src/main.py` → `MainApp.on_start()`
+  - Starts services as before
+  - Automatically launches `AppOnboardingWizard` when `app_state_store.is_onboarding_complete()` is false
+
+## New Files
+
+- `src/widgets/app_onboarding_wizard.py`
+  - `AppOnboardingWizard` (`ModalView`) implementing a multi-step secure setup flow:
+    1. Welcome/privacy mission acknowledgment
+    2. Tor bootstrap progress (with "Advanced Tor Setup" launching the existing `TorOnboardingWizard`)
+    3. Username + passphrase creation
+    4. Keypair generation + backup confirmation
+    5. Security checklist acknowledgment
+    6. Add-first-contact (manual entry; QR scan placeholder)
+    7. Quick feature tour + finish
+
+- `src/services/app_state_store.py`
+  - `AppStateStore` JSON-backed state store with encrypted identity secrets
+  - Stores onboarding progress flags (complete/step/keys_backed_up) and identity metadata
+  - Encrypts private key material using AES-GCM with a PBKDF2-derived key (passphrase is never persisted)
+
+## Event Bus Integration
+
+- `src/utils/event_bus.py`
+  - Added:
+    - `on_app_onboarding_progress` / `emit_app_onboarding_progress(state)`
+    - `on_app_onboarding_complete` / `emit_app_onboarding_complete(payload)`
+    - `on_identity_ready` / `emit_identity_ready(payload)`
+
+`AppStateStore` emits onboarding progress updates on each persisted change, and emits identity readiness when the encrypted identity is successfully unlocked.
+
+## Tests
+
+- `test_app_state_store.py`
+  - Verifies onboarding flags persist across reloads
+  - Verifies identity metadata persists
+  - Verifies private key material does not appear in plaintext in `app_state.json`
