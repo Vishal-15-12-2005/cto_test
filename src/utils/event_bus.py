@@ -96,6 +96,8 @@ class EventBus(EventDispatcher):
         pass
 
     def on_preferences_updated(self, preferences):
+        pass
+
     def on_app_onboarding_progress(self, state):
         pass
 
@@ -103,6 +105,8 @@ class EventBus(EventDispatcher):
         pass
 
     def on_identity_ready(self, payload):
+        pass
+
     # Messaging events
     def on_conversation_updated(self, conversation_id, conversation):
         pass
@@ -117,6 +121,8 @@ class EventBus(EventDispatcher):
         pass
 
     def on_receipt_update(self, conversation_id, message_id, status):
+        pass
+
     def on_contacts_updated(self):
         pass
 
@@ -160,6 +166,8 @@ class EventBus(EventDispatcher):
         pass
 
     def on_backup_imported(self):
+        pass
+
     def on_message_received(self, message):
         pass
 
@@ -213,6 +221,7 @@ class EventBus(EventDispatcher):
 
     def emit_preferences_updated(self, preferences):
         self.dispatch('on_preferences_updated', preferences)
+
     def emit_app_onboarding_progress(self, state):
         self.dispatch('on_app_onboarding_progress', state)
 
@@ -221,6 +230,7 @@ class EventBus(EventDispatcher):
 
     def emit_identity_ready(self, payload):
         self.dispatch('on_identity_ready', payload)
+
     # Messaging emit helpers
     def emit_conversation_updated(self, conversation_id, conversation):
         self.dispatch('on_conversation_updated', conversation_id, conversation)
@@ -236,6 +246,7 @@ class EventBus(EventDispatcher):
 
     def emit_receipt_update(self, conversation_id, message_id, status):
         self.dispatch('on_receipt_update', conversation_id, message_id, status)
+
     def emit_contacts_updated(self):
         self.dispatch('on_contacts_updated')
 
