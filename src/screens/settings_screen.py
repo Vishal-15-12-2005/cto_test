@@ -36,7 +36,9 @@ class PrivacySettingsTab(BoxLayout):
         self.message_value_label = Label(text=str(preferences_store.data_retention_days), size_hint_x=0.2, color=theme_manager.text_color)
         
         self.message_slider.bind(value=lambda inst, val: self._update_message_value(val))
-        message_row.extend([message_label, self.message_slider, self.message_value_label])
+        message_row.add_widget(message_label)
+        message_row.add_widget(self.message_slider)
+        message_row.add_widget(self.message_value_label)
         
         # File TTL  
         file_row = BoxLayout(orientation='horizontal', spacing=dp(12), size_hint_y=None, height=dp(40))
@@ -45,9 +47,12 @@ class PrivacySettingsTab(BoxLayout):
         self.file_value_label = Label(text=str(preferences_store.file_retention_days), size_hint_x=0.2, color=theme_manager.text_color)
         
         self.file_slider.bind(value=lambda inst, val: self._update_file_value(val))
-        file_row.extend([file_label, self.file_slider, self.file_value_label])
+        file_row.add_widget(file_label)
+        file_row.add_widget(self.file_slider)
+        file_row.add_widget(self.file_value_label)
         
-        retention_layout.extend([message_row, file_row])
+        retention_layout.add_widget(message_row)
+        retention_layout.add_widget(file_row)
         retention_card.add_widget(retention_layout)
         self.add_widget(retention_card)
         
@@ -60,23 +65,28 @@ class PrivacySettingsTab(BoxLayout):
         max_security_label = Label(text='Enforce Maximum Security', size_hint_x=0.6, color=theme_manager.text_color)
         self.max_security_switch = Switch(active=preferences_store.enforce_max_security, size_hint_x=0.4)
         self.max_security_switch.bind(active=lambda inst, val: preferences_store.set_preference('enforce_max_security', val))
-        max_security_row.extend([max_security_label, self.max_security_switch])
+        max_security_row.add_widget(max_security_label)
+        max_security_row.add_widget(self.max_security_switch)
         
         # Metadata pruning
         metadata_row = BoxLayout(orientation='horizontal', spacing=dp(12), size_hint_y=None, height=dp(40))
         metadata_label = Label(text='Metadata Pruning', size_hint_x=0.6, color=theme_manager.text_color)
         self.metadata_switch = Switch(active=preferences_store.metadata_pruning, size_hint_x=0.4)
         self.metadata_switch.bind(active=lambda inst, val: preferences_store.set_preference('metadata_pruning', val))
-        metadata_row.extend([metadata_label, self.metadata_switch])
+        metadata_row.add_widget(metadata_label)
+        metadata_row.add_widget(self.metadata_switch)
         
         # Auto cleanup
         cleanup_row = BoxLayout(orientation='horizontal', spacing=dp(12), size_hint_y=None, height=dp(40))
         cleanup_label = Label(text='Automatic Cleanup', size_hint_x=0.6, color=theme_manager.text_color)
         self.cleanup_switch = Switch(active=preferences_store.auto_cleanup_enabled, size_hint_x=0.4)
         self.cleanup_switch.bind(active=lambda inst, val: preferences_store.set_preference('auto_cleanup_enabled', val))
-        cleanup_row.extend([cleanup_label, self.cleanup_switch])
+        cleanup_row.add_widget(cleanup_label)
+        cleanup_row.add_widget(self.cleanup_switch)
         
-        security_layout.extend([max_security_row, metadata_row, cleanup_row])
+        security_layout.add_widget(max_security_row)
+        security_layout.add_widget(metadata_row)
+        security_layout.add_widget(cleanup_row)
         security_card.add_widget(security_layout)
         self.add_widget(security_card)
         
@@ -89,7 +99,8 @@ class PrivacySettingsTab(BoxLayout):
         connection_label = Label(text='Show Connection Status', size_hint_x=0.6, color=theme_manager.text_color)
         self.connection_switch = Switch(active=preferences_store.show_connection_status, size_hint_x=0.4)
         self.connection_switch.bind(active=lambda inst, val: preferences_store.set_preference('show_connection_status', val))
-        connection_row.extend([connection_label, self.connection_switch])
+        connection_row.add_widget(connection_label)
+        connection_row.add_widget(self.connection_switch)
         
         privacy_layout.add_widget(connection_row)
         privacy_card.add_widget(privacy_layout)
@@ -119,23 +130,28 @@ class NotificationsSettingsTab(BoxLayout):
         enabled_label = Label(text='Enable Notifications', size_hint_x=0.6, color=theme_manager.text_color)
         self.enabled_switch = Switch(active=preferences_store.notifications_enabled, size_hint_x=0.4)
         self.enabled_switch.bind(active=lambda inst, val: preferences_store.set_preference('notifications_enabled', val))
-        enabled_row.extend([enabled_label, self.enabled_switch])
+        enabled_row.add_widget(enabled_label)
+        enabled_row.add_widget(self.enabled_switch)
         
         # Sound enabled
         sound_row = BoxLayout(orientation='horizontal', spacing=dp(12), size_hint_y=None, height=dp(40))
         sound_label = Label(text='Sound Notifications', size_hint_x=0.6, color=theme_manager.text_color)
         self.sound_switch = Switch(active=preferences_store.sound_enabled, size_hint_x=0.4)
         self.sound_switch.bind(active=lambda inst, val: preferences_store.set_preference('sound_enabled', val))
-        sound_row.extend([sound_label, self.sound_switch])
+        sound_row.add_widget(sound_label)
+        sound_row.add_widget(self.sound_switch)
         
         # Vibration enabled
         vibration_row = BoxLayout(orientation='horizontal', spacing=dp(12), size_hint_y=None, height=dp(40))
         vibration_label = Label(text='Vibration/Haptics', size_hint_x=0.6, color=theme_manager.text_color)
         self.vibration_switch = Switch(active=preferences_store.vibration_enabled, size_hint_x=0.4)
         self.vibration_switch.bind(active=lambda inst, val: preferences_store.set_preference('vibration_enabled', val))
-        vibration_row.extend([vibration_label, self.vibration_switch])
+        vibration_row.add_widget(vibration_label)
+        vibration_row.add_widget(self.vibration_switch)
         
-        general_layout.extend([enabled_row, sound_row, vibration_row])
+        general_layout.add_widget(enabled_row)
+        general_layout.add_widget(sound_row)
+        general_layout.add_widget(vibration_row)
         general_card.add_widget(general_layout)
         self.add_widget(general_card)
         
@@ -148,7 +164,8 @@ class NotificationsSettingsTab(BoxLayout):
         quiet_enabled_label = Label(text='Enable Quiet Hours', size_hint_x=0.6, color=theme_manager.text_color)
         self.quiet_enabled_switch = Switch(active=preferences_store.quiet_hours_enabled, size_hint_x=0.4)
         self.quiet_enabled_switch.bind(active=lambda inst, val: preferences_store.set_preference('quiet_hours_enabled', val))
-        quiet_enabled_row.extend([quiet_enabled_label, self.quiet_enabled_switch])
+        quiet_enabled_row.add_widget(quiet_enabled_label)
+        quiet_enabled_row.add_widget(self.quiet_enabled_switch)
         
         # Time inputs
         time_row = BoxLayout(orientation='horizontal', spacing=dp(12), size_hint_y=None, height=dp(60))
@@ -163,7 +180,8 @@ class NotificationsSettingsTab(BoxLayout):
             halign='center'
         )
         self.start_time_input.bind(text=lambda inst, val: preferences_store.set_preference('quiet_hours_start', val))
-        start_layout.extend([start_label, self.start_time_input])
+        start_layout.add_widget(start_label)
+        start_layout.add_widget(self.start_time_input)
         
         # End time  
         end_layout = BoxLayout(orientation='vertical', size_hint_x=0.4)
@@ -175,11 +193,16 @@ class NotificationsSettingsTab(BoxLayout):
             halign='center'
         )
         self.end_time_input.bind(text=lambda inst, val: preferences_store.set_preference('quiet_hours_end', val))
-        end_layout.extend([end_label, self.end_time_input])
+        end_layout.add_widget(end_label)
+        end_layout.add_widget(self.end_time_input)
         
-        time_row.extend([BoxLayout(), start_layout, end_layout, BoxLayout()])
+        time_row.add_widget(BoxLayout())
+        time_row.add_widget(start_layout)
+        time_row.add_widget(end_layout)
+        time_row.add_widget(BoxLayout())
         
-        quiet_layout.extend([quiet_enabled_row, time_row])
+        quiet_layout.add_widget(quiet_enabled_row)
+        quiet_layout.add_widget(time_row)
         quiet_card.add_widget(quiet_layout)
         self.add_widget(quiet_card)
         
@@ -192,7 +215,8 @@ class NotificationsSettingsTab(BoxLayout):
         preview_label = Label(text='Show Content Preview', size_hint_x=0.6, color=theme_manager.text_color)
         self.preview_switch = Switch(active=preferences_store.content_preview_enabled, size_hint_x=0.4)
         self.preview_switch.bind(active=lambda inst, val: preferences_store.set_preference('content_preview_enabled', val))
-        preview_row.extend([preview_label, self.preview_switch])
+        preview_row.add_widget(preview_label)
+        preview_row.add_widget(self.preview_switch)
         
         content_layout.add_widget(preview_row)
         content_card.add_widget(content_layout)
@@ -231,8 +255,11 @@ class AppearanceSettingsTab(BoxLayout):
             on_release=lambda *_: self._set_theme_mode('system')
         )
         
-        theme_buttons.extend([self.light_btn, self.dark_btn, self.system_btn])
-        mode_row.extend([mode_label, theme_buttons])
+        theme_buttons.add_widget(self.light_btn)
+        theme_buttons.add_widget(self.dark_btn)
+        theme_buttons.add_widget(self.system_btn)
+        mode_row.add_widget(mode_label)
+        mode_row.add_widget(theme_buttons)
         
         # Accent color
         color_row = BoxLayout(orientation='horizontal', spacing=dp(12), size_hint_y=None, height=dp(50))
@@ -247,9 +274,12 @@ class AppearanceSettingsTab(BoxLayout):
         color_preview.background_color = self._hex_to_rgba(preferences_store.accent_color)
         color_preview.bind(on_release=lambda *_: self._apply_accent_color())
         
-        color_row.extend([color_label, self.color_input, color_preview])
+        color_row.add_widget(color_label)
+        color_row.add_widget(self.color_input)
+        color_row.add_widget(color_preview)
         
-        theme_layout.extend([mode_row, color_row])
+        theme_layout.add_widget(mode_row)
+        theme_layout.add_widget(color_row)
         theme_card.add_widget(theme_layout)
         self.add_widget(theme_card)
         
@@ -262,7 +292,9 @@ class AppearanceSettingsTab(BoxLayout):
         font_label = Label(text=f'Font Size ({preferences_store.font_size_scale:.1f}x)', size_hint_x=0.4, color=theme_manager.text_color)
         self.font_slider = Slider(min=0.8, max=1.5, value=preferences_store.font_size_scale, size_hint_x=0.4)
         self.font_slider.bind(value=lambda inst, val: self._update_font_scale(val))
-        font_row.extend([font_label, self.font_slider, BoxLayout(size_hint_x=0.2)])
+        font_row.add_widget(font_label)
+        font_row.add_widget(self.font_slider)
+        font_row.add_widget(BoxLayout(size_hint_x=0.2))
         
         # Layout density
         density_row = BoxLayout(orientation='horizontal', spacing=dp(12), size_hint_y=None, height=dp(50))
@@ -280,10 +312,13 @@ class AppearanceSettingsTab(BoxLayout):
             on_release=lambda *_: self._set_layout_density('comfortable')
         )
         
-        density_buttons.extend([self.compact_btn, self.comfortable_btn])
-        density_row.extend([density_label, density_buttons])
+        density_buttons.add_widget(self.compact_btn)
+        density_buttons.add_widget(self.comfortable_btn)
+        density_row.add_widget(density_label)
+        density_row.add_widget(density_buttons)
         
-        display_layout.extend([font_row, density_row])
+        display_layout.add_widget(font_row)
+        display_layout.add_widget(density_row)
         display_card.add_widget(display_layout)
         self.add_widget(display_card)
         
@@ -379,7 +414,8 @@ class AccountSettingsTab(BoxLayout):
             size_hint_x=0.7
         )
         self.username_input.bind(text=lambda inst, val: preferences_store.set_preference('username', val))
-        username_row.extend([username_label, self.username_input])
+        username_row.add_widget(username_label)
+        username_row.add_widget(self.username_input)
         
         account_layout.add_widget(username_row)
         account_card.add_widget(account_layout)
@@ -394,7 +430,8 @@ class AccountSettingsTab(BoxLayout):
         backup_label = Label(text='Automatic Backup', size_hint_x=0.6, color=theme_manager.text_color)
         self.backup_switch = Switch(active=preferences_store.auto_backup_enabled, size_hint_x=0.4)
         self.backup_switch.bind(active=lambda inst, val: preferences_store.set_preference('auto_backup_enabled', val))
-        backup_row.extend([backup_label, self.backup_switch])
+        backup_row.add_widget(backup_label)
+        backup_row.add_widget(self.backup_switch)
         
         # Export/Import buttons
         export_import_row = BoxLayout(orientation='horizontal', spacing=dp(12), size_hint_y=None, height=dp(60))
@@ -410,9 +447,11 @@ class AccountSettingsTab(BoxLayout):
             on_release=lambda *_: self._import_contacts()
         )
         
-        export_import_row.extend([export_btn, import_btn])
+        export_import_row.add_widget(export_btn)
+        export_import_row.add_widget(import_btn)
         
-        data_layout.extend([backup_row, export_import_row])
+        data_layout.add_widget(backup_row)
+        data_layout.add_widget(export_import_row)
         data_card.add_widget(data_layout)
         self.add_widget(data_card)
         
@@ -425,7 +464,8 @@ class AccountSettingsTab(BoxLayout):
         session_toggle_label = Label(text='Enable Session Management', size_hint_x=0.6, color=theme_manager.text_color)
         self.session_switch = Switch(active=preferences_store.session_management_enabled, size_hint_x=0.4)
         self.session_switch.bind(active=lambda inst, val: preferences_store.set_preference('session_management_enabled', val))
-        session_toggle_row.extend([session_toggle_label, self.session_switch])
+        session_toggle_row.add_widget(session_toggle_label)
+        session_toggle_row.add_widget(self.session_switch)
         
         # Sessions list placeholder
         sessions_list = Label(
@@ -438,7 +478,8 @@ class AccountSettingsTab(BoxLayout):
         )
         sessions_list.bind(size=lambda inst, val: setattr(inst, 'text_size', val))
         
-        session_layout.extend([session_toggle_row, sessions_list])
+        session_layout.add_widget(session_toggle_row)
+        session_layout.add_widget(sessions_list)
         session_card.add_widget(session_layout)
         self.add_widget(session_card)
         
