@@ -546,7 +546,7 @@ class SettingsScreen(Screen):
         root.add_widget(header)
         
         # Tabbed Panel
-        self.tab_panel = TabbedPanel(do_default_tab=False, tab_pos='top')
+        self.tab_panel = TabbedPanel(do_default_tab=False, tab_pos='top_mid')
         
         # Privacy Tab
         privacy_tab = TabbedPanelItem(text='Privacy')
@@ -596,6 +596,6 @@ class SettingsScreen(Screen):
         """Update layout based on window size."""
         width, _ = Window.size
         if width < dp(900):
-            self.tab_panel.tab_pos = 'top'
+            self.tab_panel.tab_pos = 'top_mid'
         else:
-            self.tab_panel.tab_pos = 'left'
+            self.tab_panel.tab_pos = 'left_mid'
